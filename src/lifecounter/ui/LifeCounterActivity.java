@@ -88,8 +88,9 @@ public class LifeCounterActivity extends Activity implements StartGameListener {
 		});
 	}
 
+
 	@Override
-	public void onPostResume() {
+	public void onResume() {
 		super.onResume();
 		if (CurrentGameHolder.game == null) {
 			newGameDialog().show();
@@ -202,7 +203,19 @@ public class LifeCounterActivity extends Activity implements StartGameListener {
 		case R.id.menu_hidecounters:
 			hideCounters();
 			return true;
+			
+		case R.id.menu_about:			          
+            AlertDialog.Builder alertbox = new AlertDialog.Builder(this);           
+            alertbox.setMessage(R.string.info_about);
+            alertbox.setNeutralButton("Ok", new DialogInterface.OnClickListener() {                 
 
+                public void onClick(DialogInterface arg0, int arg1) {
+                    
+                }
+            });          
+            alertbox.show();
+            return true;
+            
 		default:
 			return super.onOptionsItemSelected(item);
 		}
@@ -354,12 +367,14 @@ public class LifeCounterActivity extends Activity implements StartGameListener {
 	 */
 	private void setBackground() {
 		if (CurrentGameHolder.game == null)
-			return;
+			getWindow().setBackgroundDrawableResource(BackgroundResources.standard());
 
 		try {
 			getWindow().setBackgroundDrawableResource(
 					BackgroundResources.convertFrom(CurrentGameHolder.game.getGameBackground()));
 		} catch (NoSuchBackgroundException e) {
+			getWindow().setBackgroundDrawableResource(BackgroundResources.standard());
+		} catch (NullPointerException e) {
 			getWindow().setBackgroundDrawableResource(BackgroundResources.standard());
 		}
 	}
@@ -371,7 +386,9 @@ public class LifeCounterActivity extends Activity implements StartGameListener {
 		RelativeLayout sm = (RelativeLayout) findViewById(R.id.relativeLayoutSideMenu);
 				
 		if (CurrentGameHolder.game == null || CurrentGameHolder.requirements == null)
-			return;
+			sm.setVisibility(View.GONE);
+		
+	
 		
 		if(CurrentGameHolder.requirements.contains(Game.GameRequirement.PictureSlideshow)) {
 			sm.setVisibility(View.VISIBLE);

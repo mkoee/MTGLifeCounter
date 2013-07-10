@@ -178,6 +178,7 @@ public final class R {
         public static final int linearLayout3=0x7f070006;
         public static final int listViewLeftTeam=0x7f07000e;
         public static final int listViewRightTeam=0x7f07000f;
+        public static final int menu_about=0x7f07003c;
         public static final int menu_hidecounters=0x7f07003b;
         public static final int menu_new_game=0x7f070038;
         public static final int menu_random=0x7f07003a;
@@ -232,6 +233,7 @@ public final class R {
         public static final int app_name=0x7f050000;
         public static final int button_last_background=0x7f050026;
         public static final int counter_menu_hidecounters=0x7f05001b;
+        public static final int counter_menu_info=0x7f050027;
         public static final int counter_menu_new=0x7f05000a;
         public static final int counter_menu_nextbackground=0x7f050018;
         public static final int counter_menu_random=0x7f050009;
@@ -241,6 +243,7 @@ public final class R {
         public static final int dialog_change_name_info=0x7f050015;
         public static final int dialog_change_name_title=0x7f050014;
         public static final int dialog_ok=0x7f050016;
+        public static final int info_about=0x7f050028;
         public static final int info_game_resetted=0x7f050013;
         public static final int info_no_active_game=0x7f050012;
         public static final int info_nobackground=0x7f05001f;
