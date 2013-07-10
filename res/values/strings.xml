@@ -21,7 +21,7 @@
     <string name="info_no_active_game">Currently no game is active.</string>
     <string name="info_game_resetted">The game has been resetted.</string>
     <string name="dialog_change_name_title">Change name</string>
-    <string name="dialog_change_name_info">Please enter a new name:</string>
+    <string name="dialog_change_name_info">Please enter a new name (at least 3 characters):</string>
     <string name="dialog_ok">OK</string>
     <string name="dialog_cancel">Cancel</string>
     <string name="counter_menu_nextbackground">Show next background</string>

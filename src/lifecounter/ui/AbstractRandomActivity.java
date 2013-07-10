@@ -17,7 +17,7 @@ public abstract class AbstractRandomActivity extends Activity {
 	private TextView rand;
 	private TextView times;
 	private int count = 0;
-	protected final Random randomGen = new Random();
+	
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -45,7 +45,7 @@ public abstract class AbstractRandomActivity extends Activity {
 		count++;
 		times.setText(Integer.toString(count));
 		rand.setText(getRandom());
-		rand.setTextColor(0xFF808080 | randomGen.nextInt(0x00FFFFFF));		
+		rand.setTextColor(0xFF808080 | new Random().nextInt(0x00FFFFFF));		
 	}
 
 	protected abstract String getRandom();
@@ -54,7 +54,7 @@ public abstract class AbstractRandomActivity extends Activity {
 
 		@Override
 		protected String getRandom() {
-			return Integer.toString(randomGen.nextInt(6) + 1);
+			return Integer.toString(new Random().nextInt(6) + 1);
 		}
 
 	}
@@ -63,7 +63,7 @@ public abstract class AbstractRandomActivity extends Activity {
 
 		@Override
 		protected String getRandom() {
-			return CurrentGameHolder.game.randomPlayer(randomGen).getName();
+			return CurrentGameHolder.game.randomPlayer(new Random()).getName();
 		}
 
 	}
@@ -72,7 +72,7 @@ public abstract class AbstractRandomActivity extends Activity {
 
 		@Override
 		protected String getRandom() {
-			switch (randomGen.nextInt(5)) {
+			switch (new Random().nextInt(5)) {
 			case 0:
 				return "White";
 			case 1:
@@ -94,7 +94,7 @@ public abstract class AbstractRandomActivity extends Activity {
 
 		@Override
 		protected String getRandom() {
-			switch (randomGen.nextInt(6)) {
+			switch (new Random().nextInt(6)) {
 			case 0:
 			case 1:
 			case 2:
@@ -103,7 +103,7 @@ public abstract class AbstractRandomActivity extends Activity {
 			case 4:
 				return "Chaos";
 			case 5:
-				return "Planeswalker";
+				return "Planeswalk";
 			}
 			return "Nothing";
 
@@ -115,7 +115,7 @@ public abstract class AbstractRandomActivity extends Activity {
 
 		@Override
 		protected String getRandom() {			
-			return Integer.toString(randomGen.nextInt(20) + 1);
+			return Integer.toString(new Random().nextInt(20) + 1);
 		}
 		
 	}
@@ -124,7 +124,7 @@ public abstract class AbstractRandomActivity extends Activity {
 
 		@Override
 		protected String getRandom() {			
-			return randomGen.nextInt(2) == 0 ? "Heads" : "Tails";
+			return new Random().nextInt(2) == 0 ? "Heads" : "Tails";
 		}
 		
 	}

@@ -17,6 +17,9 @@ public class Player implements Serializable{
 	}
 	
 	public void setName(String name) {
+		if(name == null || name.length() < 3)
+			return;
+		
 		this.name = name;
 	}
 }

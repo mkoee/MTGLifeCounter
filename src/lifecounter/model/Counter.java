@@ -78,7 +78,12 @@ public class Counter implements Serializable {
 		
 		lifeThreat = lifeThreat < 0 ? 0 : lifeThreat;
 		
-		return lifeThreat < poisonThreat ? poisonThreat : lifeThreat;		
+		double threat = lifeThreat < poisonThreat ? poisonThreat : lifeThreat;
+		
+		threat = threat < 0 ? 0 : threat;
+		threat = threat > 1 ? 1 : threat;
+		
+		return threat;		
 	}
 	
 	public boolean isDead() {

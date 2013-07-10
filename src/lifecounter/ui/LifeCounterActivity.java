@@ -20,6 +20,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.View.OnLongClickListener;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.ArrayAdapter;
@@ -199,10 +200,6 @@ public class LifeCounterActivity extends Activity implements StartGameListener {
 		case R.id.menu_random:
 			showRandom(null);
 			return true;		
-
-		case R.id.menu_hidecounters:
-			hideCounters();
-			return true;
 			
 		case R.id.menu_about:			          
             AlertDialog.Builder alertbox = new AlertDialog.Builder(this);           
@@ -241,11 +238,15 @@ public class LifeCounterActivity extends Activity implements StartGameListener {
 			TextView viewLife = (TextView) convertView.findViewById(R.id.textViewLife);
 			viewLife.setText(Integer.toString(current.getLife()));
 
-			if (current.getThreat() > 0.8)
-				viewLife.setTextColor(0xFFFF0000);
-			else if (current.getThreat() <= 0.2)
-				viewLife.setTextColor(0xFF00FF00);
-			else
+			if (current.getThreat() > 0.5) {
+				int color = 0xFF;
+				color = (int) ( (1.0 - 2.0 * (current.getThreat() - 0.5) )* color);							
+				viewLife.setTextColor(0xFFFF0000 | (color << 8) | color);
+			} else if (current.getThreat() <= 0.5) {
+				int color = 0xFF;
+				color = (int) ((2.0 * current.getThreat()) * color);				
+				viewLife.setTextColor(0xFF00FF00 | (color << 16) | color);
+			} else
 				viewLife.setTextColor(0xFFFFFFFF);
 
 			if (CurrentGameHolder.game.is1vs1())
@@ -269,9 +270,11 @@ public class LifeCounterActivity extends Activity implements StartGameListener {
 			//text for name
 			final TextView viewName = (TextView) convertView.findViewById(R.id.textViewPlayerName);
 			viewName.setText(current.getPlayer().getName());
-			viewName.setOnClickListener(new OnClickListener() {
+			viewName.setOnLongClickListener(new OnLongClickListener() {
 
-				public void onClick(View arg0) {
+
+				@Override
+				public boolean onLongClick(View arg0) {
 					AlertDialog.Builder alert = new AlertDialog.Builder(LifeCounterActivity.this);
 
 					alert.setTitle(R.string.dialog_change_name_title);
@@ -299,6 +302,8 @@ public class LifeCounterActivity extends Activity implements StartGameListener {
 							});
 
 					alert.show();
+					
+					return true;
 				}
 			});
 
@@ -323,6 +328,16 @@ public class LifeCounterActivity extends Activity implements StartGameListener {
 					notifyDataSetChanged();
 				}
 			});
+			buttonLifeIncrease.setOnLongClickListener(new OnLongClickListener() {
+				
+				@Override
+				public boolean onLongClick(View v) {
+					current.changeLife(10);
+					notifyDataSetChanged();					
+					return false;
+				}
+			});
+			
 			//Decrease life for a counter
 			final Button buttonLifeDecrease = (Button) convertView
 					.findViewById(R.id.buttonDecreaseLife);
@@ -331,6 +346,15 @@ public class LifeCounterActivity extends Activity implements StartGameListener {
 				public void onClick(View v) {
 					current.changeLife(-1);
 					notifyDataSetChanged();
+				}
+			});
+			buttonLifeDecrease.setOnLongClickListener(new OnLongClickListener() {
+				
+				@Override
+				public boolean onLongClick(View v) {
+					current.changeLife(-10);
+					notifyDataSetChanged();					
+					return false;
 				}
 			});
 
@@ -440,6 +464,10 @@ public class LifeCounterActivity extends Activity implements StartGameListener {
 	public void start(Game g) {
 		CurrentGameHolder.game = g;
 		CurrentGameHolder.requirements = g.getRequirements();
+		
+		if (leftTeam.getVisibility() == View.INVISIBLE)
+			hideCounters();
+		
 		initialize();
 	}
 }
