@@ -1,0 +1,40 @@
+package lifecounter.ui;
+
+import java.lang.reflect.Field;
+
+import android.util.Log;
+
+import lifecounter.model.Game.GameBackground;
+import lifecounter.model.Game.PlaneType;
+import lifecounter.ui.exceptions.NoSuchBackgroundException;
+
+public class BackgroundResources {
+	
+	private static int STANDARD_BACKGROUND = R.drawable.background;
+	
+	public static int standard() {
+		return STANDARD_BACKGROUND;
+	}
+	
+	public static int convertFrom(GameBackground gb) throws NoSuchBackgroundException {
+	
+		if(gb.getType().equals(PlaneType.none)) {
+			return standard();
+		}
+		
+		if(gb.getType().equals(PlaneType.planechase)) {
+			try {
+				Field picRes = R.drawable.class.getField("planchase_plane" + gb.getResourceNumber());
+				return picRes.getInt(null);
+			} catch (NoSuchFieldException e) {
+				throw new NoSuchBackgroundException(e);
+			} catch (IllegalArgumentException e) {
+				throw new NoSuchBackgroundException(e);
+			} catch (IllegalAccessException e) {
+				throw new NoSuchBackgroundException(e);
+			}
+		}
+		
+		throw new NoSuchBackgroundException();
+	}
+}

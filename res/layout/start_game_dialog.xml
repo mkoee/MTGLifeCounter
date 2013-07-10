@@ -1,0 +1,262 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/RelativeLayout1"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <Button
+        android:id="@+id/buttonStartGame"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:text="@string/start_buttonstart" />
+
+    <ScrollView
+        android:id="@+id/scrollView1"
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent"
+        android:layout_above="@id/buttonStartGame"
+        android:layout_alignParentTop="true" >
+
+        <RadioGroup
+            android:id="@+id/RadioGroupStartGame"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/textView1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/start_text_normalgame"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
+
+            <RadioButton
+                android:id="@+id/radioButtonOneVsOne"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:text="@string/start_onevsone" />
+
+            <RadioButton
+                android:id="@+id/radioButtonAllVsAll"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/start_allvsall" />
+
+            <TableLayout
+                android:id="@+id/tableLayoutAllVsAll"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content" >
+
+                <TableRow
+                    android:id="@+id/tableRow3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" >
+
+                    <TextView
+                        android:id="@+id/textViewStartAllVsAllPlayers"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.2"
+                        android:gravity="center_horizontal|center_vertical"
+                        android:text="@string/start_players" />
+
+                    <EditText
+                        android:id="@+id/editTextStartAllVsAllPlayers"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.8"
+                        android:inputType="number"
+                        android:text="3" />
+                </TableRow>
+            </TableLayout>
+
+            <RadioButton
+                android:id="@+id/radioButtonStartTeamMatch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/start_teammatch" />
+
+            <TableLayout
+                android:id="@+id/tableLayoutTeamMatch"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content" >
+
+                <TableRow
+                    android:id="@+id/tableRow2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" >
+
+                    <TextView
+                        android:id="@+id/textViewStartTeamPlayers"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.2"
+                        android:gravity="center_horizontal|center_vertical"
+                        android:text="@string/start_players" />
+
+                    <EditText
+                        android:id="@+id/editTextStartTeamPlayersLeft"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.4"
+                        android:inputType="number"
+                        android:text="2" />
+
+                    <EditText
+                        android:id="@+id/editTextStartTeamPlayersRight"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.4"
+                        android:inputType="number"
+                        android:text="2" />
+                </TableRow>
+            </TableLayout>
+
+            <TextView
+                android:id="@+id/TextView01"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/start_text_specialgame" />
+
+            <RadioButton
+                android:id="@+id/radioButtonTwoHeadedGiant"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/start_twoheadedgiant" />
+
+            <TableLayout
+                android:id="@+id/tableLayoutTwoHeadedGiant"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
+
+                <TableRow
+                    android:id="@+id/tableRow1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" >
+
+                    <TextView
+                        android:id="@+id/textViewStartTwoHeadedGiantPlayers"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.2"
+                        android:gravity="center_horizontal|center_vertical"
+                        android:text="@string/start_players_per_team" />
+
+                    <EditText
+                        android:id="@+id/editTextStartTwoHeadedGiantPlayers"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.8"
+                        android:inputType="number"
+                        android:text="2" />
+                </TableRow>
+            </TableLayout>
+
+            <RadioButton
+                android:id="@+id/radioButtonArchenemy"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/start_archenemy" />
+
+            <TableLayout
+                android:id="@+id/tableLayoutArchenemy"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
+
+                <TableRow
+                    android:id="@+id/TableRow01"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" >
+
+                    <TextView
+                        android:id="@+id/textViewStartArchenemyPlayers"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.2"
+                        android:gravity="center_horizontal|center_vertical"
+                        android:text="@string/start_players_opponents" />
+
+                    <EditText
+                        android:id="@+id/editTextStartArchenemyPlayers"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.8"
+                        android:inputType="number"
+                        android:text="2" />
+                </TableRow>
+            </TableLayout>
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/start_text_extras" />
+
+            <Spinner
+                android:id="@+id/spinnerGameOption"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:entries="@array/gameoptions" />
+
+            <TableLayout
+                android:id="@+id/tablePlanchaseEdition"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
+
+                <TableRow
+                    android:id="@+id/TableRow01"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" >
+
+                    <TextView
+                        android:id="@+id/textViewStartPlanechaseEdition"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.2"
+                        android:gravity="center_horizontal|center_vertical"
+                        android:text="@string/start_gameoption_planechase_edition" />
+
+                    <Spinner
+                        android:id="@+id/spinnerPlanechaseEdition"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.8"
+                        android:entries="@array/planechase" />
+                </TableRow>
+            </TableLayout>
+            
+            <TableLayout
+                android:id="@+id/tableArchenemyDeck"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
+
+                <TableRow
+                    android:id="@+id/TableRow01"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" >
+
+                    <TextView
+                        android:id="@+id/textViewStartArchenemyDeck"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.2"
+                        android:gravity="center_horizontal|center_vertical"
+                        android:text="@string/start_gameoption_archenemy_deck" />
+
+                    <Spinner
+                        android:id="@+id/spinnerArchenemyDeck"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.8"
+                        android:entries="@array/archenemy" />
+                </TableRow>
+            </TableLayout>
+        </RadioGroup>
+
+    </ScrollView>
+
+</RelativeLayout>

@@ -1,0 +1,83 @@
+package lifecounter.model;
+
+import java.util.Collections;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Set;
+
+public class PlanechaseGameOption implements GameOption {
+
+	public Game useOn(Game parentGame) {
+		return new PlanechaseGame(parentGame);
+	}
+
+	private static class PlanechaseGame extends Game {
+
+		private static final long serialVersionUID = -8530528093897790555L;
+
+		private static final int NUMBER_OF_PLANES = 40;
+		private List<Integer> cards;
+		private Game parent;
+		private boolean hasStarted;
+
+		public PlanechaseGame(Game parent) {
+			if (parent == null)
+				throw new NullPointerException("Game may not be null.");
+
+			this.parent = parent;
+
+			cards = new LinkedList<Integer>();
+			for (int i = 1; i <= NUMBER_OF_PLANES; i++) {
+				cards.add(i);
+			}
+			Collections.shuffle(cards);
+			hasStarted = false;
+		}
+
+		@Override
+		public void reset() {
+			Collections.shuffle(cards);
+			hasStarted = false;
+			parent.reset();
+		}
+
+		@Override
+		public boolean is1vs1() {
+			return parent.is1vs1();
+		}
+
+		@Override
+		public void nextGameBackground() {
+			hasStarted = true;
+			cards.add(cards.get(0));
+			cards.remove(0);
+		}
+
+		@Override
+		public GameBackground getGameBackground() {
+			if (hasStarted)
+				return new GameBackground(PlaneType.planechase, cards.get(0));
+			else
+				return Game.NO_BACKGROUND;
+		}
+
+		@Override
+		public Team[] getTeams() {
+			return parent.getTeams();
+		}
+
+		@Override
+		public Counter[] getCounters() {
+			return parent.getCounters();
+		}
+
+		@Override
+		public Set<GameRequirement> getRequirements() {			
+			Set<GameRequirement> result = parent.getRequirements();
+			result.add(GameRequirement.PictureSlideshow);			
+			return result;
+		}
+
+	}
+
+}

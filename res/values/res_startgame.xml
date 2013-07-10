@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="gameoptions">
+        <item >None</item>
+        <item >Planechase</item>
+        <item >Archenemy</item>
+    </string-array>
+    <string-array name="planechase">
+        <item >Planechase 2010 Edition</item>
+        <item >Planechase 2012 Edition</item>
+    </string-array>
+    <string-array name="archenemy">
+        <item >Assemble the Doomsday Machine</item>
+        <item >Trample Civilization Underfoot</item>
+        <item >Scorch the World with Dragonfire</item>
+        <item >Bring About the Undead Apocalypse</item>
+    </string-array>
+    
+</resources>
