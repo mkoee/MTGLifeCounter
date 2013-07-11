@@ -26,6 +26,7 @@ import android.view.WindowManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.SeekBar;
@@ -49,6 +50,8 @@ public class LifeCounterActivity extends Activity implements StartGameListener {
 
 	private ListView leftTeam;
 	private ListView rightTeam;
+	
+	private LinearLayout counterLayout;
 
 	//	private LinearLayout backgroundLayout;
 
@@ -61,6 +64,8 @@ public class LifeCounterActivity extends Activity implements StartGameListener {
 
 		leftTeam = (ListView) findViewById(R.id.listViewLeftTeam);
 		rightTeam = (ListView) findViewById(R.id.listViewRightTeam);
+		
+		counterLayout = (LinearLayout) findViewById(R.id.counterLayout);
 
 		//Sidemenu buttons
 		final Button sideHideCounters = (Button) findViewById(R.id.buttonSidemenuHideCounters);
@@ -390,16 +395,17 @@ public class LifeCounterActivity extends Activity implements StartGameListener {
 	 * game.
 	 */
 	private void setBackground() {
-		if (CurrentGameHolder.game == null)
-			getWindow().setBackgroundDrawableResource(BackgroundResources.standard());
+			
+		if (CurrentGameHolder.game == null)			
+			counterLayout.setBackgroundResource(BackgroundResources.standard());
 
 		try {
-			getWindow().setBackgroundDrawableResource(
+			counterLayout.setBackgroundResource(
 					BackgroundResources.convertFrom(CurrentGameHolder.game.getGameBackground()));
 		} catch (NoSuchBackgroundException e) {
-			getWindow().setBackgroundDrawableResource(BackgroundResources.standard());
+			counterLayout.setBackgroundResource(BackgroundResources.standard());
 		} catch (NullPointerException e) {
-			getWindow().setBackgroundDrawableResource(BackgroundResources.standard());
+			counterLayout.setBackgroundResource(BackgroundResources.standard());
 		}
 	}
 	

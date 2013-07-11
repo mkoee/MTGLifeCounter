@@ -6,9 +6,8 @@
 
     <RelativeLayout
         android:id="@+id/relativeLayoutSideMenu"
-        android:layout_width="0dip"
-        android:layout_height="match_parent"
-        android:layout_weight="0.1" >
+        android:layout_width="42dip"
+        android:layout_height="match_parent" >
 
         <Button
             android:id="@+id/buttonSidemenuNextBackground"
@@ -43,28 +42,37 @@
             android:layout_height="wrap_content"
             android:layout_above="@+id/buttonSidemenuNextBackground"
             android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true"
             android:text="@string/button_last_background" />
 
     </RelativeLayout>
 
-    <ListView
-        android:id="@+id/listViewLeftTeam"
-        android:layout_width="0dip"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginRight="5dp"
-        android:layout_weight="0.45"
-        android:cacheColorHint="@android:color/transparent" >
-    </ListView>
+    <LinearLayout
+        android:id="@+id/counterLayout"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:baselineAligned="false"       
+         >
 
-    <ListView
-        android:id="@+id/listViewRightTeam"
-        android:layout_width="0dip"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginRight="5dp"
-        android:layout_weight="0.45"
-        android:cacheColorHint="@android:color/transparent" >
-    </ListView>
+        <ListView
+            android:layout_gravity="center_vertical"
+            android:id="@+id/listViewLeftTeam"
+            android:layout_width="0dip"
+            android:layout_weight="0.5"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="5dp"
+            android:cacheColorHint="@android:color/transparent" >
+        </ListView>
+
+        <ListView
+            android:layout_gravity="center_vertical"
+            android:id="@+id/listViewRightTeam"
+            android:layout_width="0dip"
+             android:layout_weight="0.5"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="5dp"
+            android:cacheColorHint="@android:color/transparent" >
+        </ListView>
+    </LinearLayout>
 
 </LinearLayout>
