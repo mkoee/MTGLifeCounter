@@ -18,10 +18,13 @@ public class Counter implements Serializable {
 	private int poison;
 
 	private CounterType type;
+	
+	private boolean dead;
 
 	protected Counter(CounterType type, Player player) {
 		this.player = player;
 		this.type = type;
+		this.dead = false;
 		reset();
 	}
 
@@ -31,6 +34,10 @@ public class Counter implements Serializable {
 
 	public void changePoison(int amount) {
 		setPoison(poison + amount);
+	}
+	
+	public void setDead(boolean dead) {
+		this.dead = dead;
 	}
 
 	public void setPoison(int poison) {
@@ -67,9 +74,14 @@ public class Counter implements Serializable {
 	public int getBasePoison() {
 		return type.getBasePoison();
 	}
+	
+	public boolean isDead() {
+		return dead;
+	}
 
 	public void reset() {
 		type.resetCounter(this);
+		setDead(false);
 	}
 	
 	public double getThreat() {
@@ -84,9 +96,5 @@ public class Counter implements Serializable {
 		threat = threat > 1 ? 1 : threat;
 		
 		return threat;		
-	}
-	
-	public boolean isDead() {
-		return (getLife() == 0) || (getPoison() == getBasePoison());
 	}
 }

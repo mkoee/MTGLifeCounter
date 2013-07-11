@@ -50,7 +50,7 @@ public class LifeCounterActivity extends Activity implements StartGameListener {
 
 	private ListView leftTeam;
 	private ListView rightTeam;
-	
+
 	private LinearLayout counterLayout;
 
 	//	private LinearLayout backgroundLayout;
@@ -64,7 +64,7 @@ public class LifeCounterActivity extends Activity implements StartGameListener {
 
 		leftTeam = (ListView) findViewById(R.id.listViewLeftTeam);
 		rightTeam = (ListView) findViewById(R.id.listViewRightTeam);
-		
+
 		counterLayout = (LinearLayout) findViewById(R.id.counterLayout);
 
 		//Sidemenu buttons
@@ -94,7 +94,6 @@ public class LifeCounterActivity extends Activity implements StartGameListener {
 		});
 	}
 
-
 	@Override
 	public void onResume() {
 		super.onResume();
@@ -120,12 +119,15 @@ public class LifeCounterActivity extends Activity implements StartGameListener {
 
 	/**
 	 * Shows the random dialog.
-	 * @param tag The random tab-tag that should be shown at the beginning or null for the default tab.
+	 * 
+	 * @param tag
+	 *            The random tab-tag that should be shown at the beginning or
+	 *            null for the default tab.
 	 */
 	private void showRandom(String tag) {
 		if (CurrentGameHolder.game != null) {
 			Intent intent = new Intent(this, RandomActivity.class);
-			if(tag != null)
+			if (tag != null)
 				intent.putExtra("random_category", tag);
 			startActivity(intent);
 		} else
@@ -147,7 +149,7 @@ public class LifeCounterActivity extends Activity implements StartGameListener {
 			Toast.makeText(this, R.string.info_no_active_game, Toast.LENGTH_LONG).show();
 
 	}
-	
+
 	/**
 	 * Shows the next background-
 	 */
@@ -190,10 +192,10 @@ public class LifeCounterActivity extends Activity implements StartGameListener {
 				CurrentGameHolder.game.reset();
 				start(CurrentGameHolder.game);
 
-//				Intent intent = new Intent(this, RandomActivity.class);
-//				intent.putExtra("random_category", "player");
-//				startActivity(intent);
-//				
+				//				Intent intent = new Intent(this, RandomActivity.class);
+				//				intent.putExtra("random_category", "player");
+				//				startActivity(intent);
+				//				
 				showRandom("player");
 
 				Toast.makeText(this, R.string.info_game_resetted, Toast.LENGTH_SHORT).show();
@@ -204,20 +206,20 @@ public class LifeCounterActivity extends Activity implements StartGameListener {
 
 		case R.id.menu_random:
 			showRandom(null);
-			return true;		
-			
-		case R.id.menu_about:			          
-            AlertDialog.Builder alertbox = new AlertDialog.Builder(this);           
-            alertbox.setMessage(R.string.info_about);
-            alertbox.setNeutralButton("Ok", new DialogInterface.OnClickListener() {                 
+			return true;
 
-                public void onClick(DialogInterface arg0, int arg1) {
-                    
-                }
-            });          
-            alertbox.show();
-            return true;
-            
+		case R.id.menu_about:
+			AlertDialog.Builder alertbox = new AlertDialog.Builder(this);
+			alertbox.setMessage(R.string.info_about);
+			alertbox.setNeutralButton("Ok", new DialogInterface.OnClickListener() {
+
+				public void onClick(DialogInterface arg0, int arg1) {
+
+				}
+			});
+			alertbox.show();
+			return true;
+
 		default:
 			return super.onOptionsItemSelected(item);
 		}
@@ -232,51 +234,98 @@ public class LifeCounterActivity extends Activity implements StartGameListener {
 		@Override
 		public View getView(int position, View convertView, ViewGroup parent) {
 
+			final Counter current;
+			final TextView viewPoison;
+			final TextView viewLife;
+			final TextView viewName;
+			final Button buttonLifeIncrease;
+			final Button buttonLifeDecrease;
+			final SeekBar poisonBar;			
+			
 			if (convertView == null) {
 				LayoutInflater vi = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-				convertView = vi.inflate(R.layout.counter_element, null);
+				convertView = vi.inflate(R.layout.counter_element, null);		
 			}
+			
+			current = getItem(position);
+			
+			viewPoison = (TextView) convertView.findViewById(R.id.textViewPoison);
+			viewLife = (TextView) convertView.findViewById(R.id.textViewLife);
+			viewName = (TextView) convertView.findViewById(R.id.textViewPlayerName);
+			buttonLifeIncrease = (Button) convertView.findViewById(R.id.buttonIncreaseLife);
+			buttonLifeDecrease = (Button) convertView.findViewById(R.id.buttonDecreaseLife);
+			poisonBar = (SeekBar) convertView.findViewById(R.id.seekBarPoison);	
+						
+			//text for name			
+			viewName.setText(current.getPlayer().getName());
+			
 
-			final Counter current = getItem(position);
+			//Text for poison
+			viewPoison.setText(Integer.toString(current.getPoison()));
+			
+			poisonBar.setMax(current.getBasePoison());
+			poisonBar.setProgress(current.getPoison());
 
 			//text for life
-			TextView viewLife = (TextView) convertView.findViewById(R.id.textViewLife);
-			viewLife.setText(Integer.toString(current.getLife()));
+			
+			if (current.isDead()) {
+				viewLife.setText(R.string.counter_player_dead);
+				
+				buttonLifeIncrease.setVisibility(View.GONE);
+				buttonLifeDecrease.setVisibility(View.GONE);
+				poisonBar.setVisibility(View.GONE);
+				viewPoison.setVisibility(View.GONE);
+				
+				viewLife.setTextColor(0xFFFF0000);
+			} else {
+				viewLife.setText(Integer.toString(current.getLife()));
+				
+				buttonLifeIncrease.setVisibility(View.VISIBLE);
+				buttonLifeDecrease.setVisibility(View.VISIBLE);
+				poisonBar.setVisibility(View.VISIBLE);
+				viewPoison.setVisibility(View.VISIBLE);
 
-			if (current.getThreat() > 0.5) {
-				int color = 0xFF;
-				color = (int) ( (1.0 - 2.0 * (current.getThreat() - 0.5) )* color);							
-				viewLife.setTextColor(0xFFFF0000 | (color << 8) | color);
-			} else if (current.getThreat() <= 0.5) {
-				int color = 0xFF;
-				color = (int) ((2.0 * current.getThreat()) * color);				
-				viewLife.setTextColor(0xFF00FF00 | (color << 16) | color);
-			} else
-				viewLife.setTextColor(0xFFFFFFFF);
+				if (current.getThreat() > 0.5) {
+					int color = 0xFF;
+					color = (int) ((1.0 - 2.0 * (current.getThreat() - 0.5)) * color);
+					viewLife.setTextColor(0xFFFF0000 | (color << 8) | color);
+				} else if (current.getThreat() <= 0.5) {
+					int color = 0xFF;
+					color = (int) ((2.0 * current.getThreat()) * color);
+					viewLife.setTextColor(0xFF00FF00 | (color << 16) | color);
+				} else
+					viewLife.setTextColor(0xFFFFFFFF);
+			}
 
 			if (CurrentGameHolder.game.is1vs1())
 				viewLife.setTextSize(72);
-
-			//			int colorGreen = ((int) ((1 - current.getThreat()) * 0xFF)) << 8;
-			//			int colorRed = ((int) (current.getThreat() * 0xFF)) << 16;
-			//			
-			//			viewLife.setTextColor((colorGreen | colorRed) | 0xFF000000);
-			//			
-
+			
+			
+			
+			//Register the button listeners				
 			viewLife.setOnClickListener(new OnClickListener() {
-
 				public void onClick(View arg0) {
 					current.changeLife(-1);
 					notifyDataSetChanged();
 
 				}
 			});
-
-			//text for name
-			final TextView viewName = (TextView) convertView.findViewById(R.id.textViewPlayerName);
-			viewName.setText(current.getPlayer().getName());
+			viewLife.setOnLongClickListener(new OnLongClickListener() {					
+				@Override
+				public boolean onLongClick(View v) {
+					current.setDead(!current.isDead());
+					return false;
+				}
+			});
+			
+			viewPoison.setOnClickListener(new OnClickListener() {
+				public void onClick(View v) {
+					current.changePoison(1);
+					notifyDataSetChanged();
+				}
+			});
+			
 			viewName.setOnLongClickListener(new OnLongClickListener() {
-
 
 				@Override
 				public boolean onLongClick(View arg0) {
@@ -307,75 +356,48 @@ public class LifeCounterActivity extends Activity implements StartGameListener {
 							});
 
 					alert.show();
-					
+
 					return true;
 				}
 			});
-
-			//Text for poison
-			final TextView viewPoison = (TextView) convertView.findViewById(R.id.textViewPoison);
-			viewPoison.setText(Integer.toString(current.getPoison()));
-			viewPoison.setOnClickListener(new OnClickListener() {
-
-				public void onClick(View v) {
-					current.changePoison(1);
-					notifyDataSetChanged();
-				}
-			});
-
+			
 			//Increase life for a counter
-			final Button buttonLifeIncrease = (Button) convertView
-					.findViewById(R.id.buttonIncreaseLife);
 			buttonLifeIncrease.setOnClickListener(new OnClickListener() {
-
 				public void onClick(View v) {
 					current.changeLife(1);
 					notifyDataSetChanged();
 				}
 			});
 			buttonLifeIncrease.setOnLongClickListener(new OnLongClickListener() {
-				
 				@Override
 				public boolean onLongClick(View v) {
 					current.changeLife(10);
-					notifyDataSetChanged();					
+					notifyDataSetChanged();
 					return false;
 				}
 			});
-			
-			//Decrease life for a counter
-			final Button buttonLifeDecrease = (Button) convertView
-					.findViewById(R.id.buttonDecreaseLife);
-			buttonLifeDecrease.setOnClickListener(new OnClickListener() {
 
+			//Decrease life for a counter
+			buttonLifeDecrease.setOnClickListener(new OnClickListener() {
 				public void onClick(View v) {
 					current.changeLife(-1);
 					notifyDataSetChanged();
 				}
 			});
 			buttonLifeDecrease.setOnLongClickListener(new OnLongClickListener() {
-				
 				@Override
 				public boolean onLongClick(View v) {
 					current.changeLife(-10);
-					notifyDataSetChanged();					
+					notifyDataSetChanged();
 					return false;
 				}
 			});
-
-			final SeekBar poisonBar = (SeekBar) convertView.findViewById(R.id.seekBarPoison);
-			poisonBar.setMax(current.getBasePoison());
-			poisonBar.setProgress(current.getPoison());
+			
 			poisonBar.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
 
-				public void onStopTrackingTouch(SeekBar arg0) {
-					// TODO Auto-generated method stub
-				}
+				public void onStopTrackingTouch(SeekBar arg0) {	}
 
-				public void onStartTrackingTouch(SeekBar arg0) {
-					// TODO Auto-generated method stub
-
-				}
+				public void onStartTrackingTouch(SeekBar arg0) { }
 
 				public void onProgressChanged(SeekBar arg0, int arg1, boolean arg2) {
 					if (arg2) {
@@ -384,7 +406,8 @@ public class LifeCounterActivity extends Activity implements StartGameListener {
 					}
 				}
 			});
-
+			
+			
 			return convertView;
 
 		}
@@ -395,37 +418,35 @@ public class LifeCounterActivity extends Activity implements StartGameListener {
 	 * game.
 	 */
 	private void setBackground() {
-			
-		if (CurrentGameHolder.game == null)			
+
+		if (CurrentGameHolder.game == null)
 			counterLayout.setBackgroundResource(BackgroundResources.standard());
 
 		try {
-			counterLayout.setBackgroundResource(
-					BackgroundResources.convertFrom(CurrentGameHolder.game.getGameBackground()));
+			counterLayout.setBackgroundResource(BackgroundResources
+					.convertFrom(CurrentGameHolder.game.getGameBackground()));
 		} catch (NoSuchBackgroundException e) {
 			counterLayout.setBackgroundResource(BackgroundResources.standard());
 		} catch (NullPointerException e) {
 			counterLayout.setBackgroundResource(BackgroundResources.standard());
 		}
 	}
-	
+
 	/**
 	 * Sets the view visibility so that the requirements are fulfilled.
 	 */
 	private void setRequirements() {
 		RelativeLayout sm = (RelativeLayout) findViewById(R.id.relativeLayoutSideMenu);
-				
+
 		if (CurrentGameHolder.game == null || CurrentGameHolder.requirements == null)
 			sm.setVisibility(View.GONE);
-		
-	
-		
-		if(CurrentGameHolder.requirements.contains(Game.GameRequirement.PictureSlideshow)) {
+
+		if (CurrentGameHolder.requirements.contains(Game.GameRequirement.PictureSlideshow)) {
 			sm.setVisibility(View.VISIBLE);
 		} else {
 			sm.setVisibility(View.GONE);
 		}
-		
+
 	}
 
 	/**
@@ -437,7 +458,7 @@ public class LifeCounterActivity extends Activity implements StartGameListener {
 		Game g = CurrentGameHolder.game;
 		setBackground();
 		setRequirements();
-		
+
 		if (g.getTeams() != null && g.getTeams().length == 2) {
 
 			leftTeam.setAdapter(new CounterListAdapter(this, g.getTeams()[0].getCounters()));
@@ -470,10 +491,10 @@ public class LifeCounterActivity extends Activity implements StartGameListener {
 	public void start(Game g) {
 		CurrentGameHolder.game = g;
 		CurrentGameHolder.requirements = g.getRequirements();
-		
+
 		if (leftTeam.getVisibility() == View.INVISIBLE)
 			hideCounters();
-		
+
 		initialize();
 	}
 }

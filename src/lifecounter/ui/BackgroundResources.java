@@ -2,7 +2,6 @@ package lifecounter.ui;
 
 import java.lang.reflect.Field;
 
-import android.util.Log;
 import lifecounter.model.games.Game.GameBackground;
 import lifecounter.model.games.Game.PlaneType;
 import lifecounter.ui.exceptions.NoSuchBackgroundException;

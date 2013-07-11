@@ -65,7 +65,7 @@ public class StartGameDialog extends Dialog implements OnClickListener {
 	public StartGameDialog(Context c, StartGameListener... listener) {
 		super(c);
 		setContentView(R.layout.start_game_dialog);
-		getWindow().setLayout(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT);
+		getWindow().setLayout(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
 		setTitle(R.string.start_title);
 		setCancelable(true);
 

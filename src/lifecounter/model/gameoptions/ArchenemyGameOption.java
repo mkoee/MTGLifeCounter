@@ -111,6 +111,7 @@ public class ArchenemyGameOption implements GameOption {
 		this.deckNumber = deckNumber;
 	}
 
+	@SuppressWarnings("unchecked")
 	public Game useOn(Game parentGame) {
 		return new ArchenemyGame(parentGame, DECKS[deckNumber]);
 	}

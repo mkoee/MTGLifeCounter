@@ -14,7 +14,6 @@
     <string name="start_text_normalgame">Normal Game:</string>
     <string name="start_text_specialgame">Special Game:</string>
     <string name="start_twoheadedgiant">Two Headed Giant</string>
-    <string name="random_hint">Click on the value to change it.</string>
     <string name="random_return">Return to Game</string>
     <string name="random_times_label">&quot;Times rolled:&quot;</string>
     <string name="random_start">Click here</string>
@@ -41,5 +40,6 @@
     <string name="button_last_background">&lt;</string>
     <string name="counter_menu_info">Info</string>
     <string name="info_about">MTG Life Counter Version: 1.1.1\n\nMagic: The Gathering and respective logos are trademarks of Wizards of the Coast LLC in the USA and other countries.\nThis app is not produced, endorsed, supported, or affiliated with Wizards of the Coast. The information presented at the cards in some gamemodes is copyrighted by Wizards of the Coast.\n\nWotC: www.wizards.com/‎\n\nApp: https://github.com/GeorgeLouisCostanza/MTGLifeCounter/releases</string>
+    <string name="counter_player_dead">Dead</string>
 
 </resources>
