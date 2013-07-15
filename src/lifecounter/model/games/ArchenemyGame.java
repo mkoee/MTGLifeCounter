@@ -18,7 +18,7 @@ public class ArchenemyGame extends Game{
 	
 	public ArchenemyGame(Player archenemy, Player... opponents) {	
 		
-		this.archenemy = CounterType.DEFAULT.createCounter(archenemy);
+		this.archenemy = new CounterType(40,10).createCounter(archenemy);
 		this.opponents = new Team(CounterType.DEFAULT, opponents);
 	}
 	
